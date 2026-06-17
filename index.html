@@ -61,7 +61,7 @@
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 0.5; }
-      50%       { transform: scale(1.08); opacity: 0.9; }
+      50%      { transform: scale(1.08); opacity: 0.9; }
     }
 
     .screen {
@@ -104,7 +104,7 @@
 
     @keyframes bounce {
       0%, 100% { transform: translateY(0) rotate(-3deg); }
-      50%       { transform: translateY(-12px) rotate(3deg); }
+      50%      { transform: translateY(-12px) rotate(3deg); }
     }
 
     .h1 {
@@ -331,7 +331,6 @@
 
   <div class="wrap">
 
-    <!-- LOGIN -->
     <div class="screen active" id="s-login">
       <div class="ribbon">✦ noite especial ✦</div>
       <div class="big-emoji">🌸</div>
@@ -347,7 +346,6 @@
       </div>
     </div>
 
-    <!-- ARTISTAS -->
     <div class="screen" id="s-artists">
       <div class="big-emoji" style="font-size:44px;margin-bottom:.2rem">🌙</div>
       <div class="h1" style="font-size:20px" id="greet">Boa noite! 🌸</div>
@@ -396,7 +394,6 @@
       </div>
     </div>
 
-    <!-- TOCANDO -->
     <div class="screen" id="s-play" style="padding-top:2rem">
       <div class="disc-wrap" id="disc">🎵</div>
       <div class="song-name" id="s-title">—</div>
@@ -422,11 +419,11 @@
 
   <script>
     var DATA = {
-      bts:    { e:'💜', name:'BTS',            song:'Dynamite',             spId:'0t1kP63rueHleOhQkYSXFY', gt:'Boa noite, ARMY! 💜',         gm:'Que os sonhos sejam coloridos como as músicas do BTS. Durma bem e acorde radiante! 🌸' },
-      zayn:   { e:'🎤', name:'Zayn',           song:'Pillowtalk',           spId:'3qT4bUD1MaWpGrTXcOK5zc', gt:'Boa noite, linda! 🌙',         gm:'Que seu travesseiro seja macio, seus sonhos doces, e você acorde ainda mais bonita amanhã. 💫' },
-      ariana: { e:'☁️', name:'Ariana Grande',  song:'Moonlight',            spId:'4nrPB8O7Y7wsOCJdgXkthe', gt:'Boa noite, thank u! 🤍',       gm:'Brilhe nos sonhos como a lua brilha pela janela. Que a noite te abrace com carinho! 🌙✨' },
-      frank:  { e:'🌊', name:'Frank Ocean',    song:'Godspeed',             spId:'77BO2DiMFdFCgQTfcBgPNW', gt:'Boa noite, alma sensível! 🌊', gm:'Que seus sonhos sejam profundos e bonitos como as melodias do Frank Ocean. 💙' },
-      natan:  { e:'🤠', name:'Natanzinho Lima', song:'25 Milhões de Beijos', spId:'3LW7M4ZFBvnhWvPjREMSvs', gt:'Boa noite, meu bem! 🤠💛',     gm:'Que você receba 25 milhões de beijos nos sonhos esta noite! Durma com sorriso no rosto. 🌻💛' }
+      bts:    { e:'💜', name:'BTS',           song:'Dynamite',            spId:'0t1kP63rueHleOhQkYSXFY', gt:'Boa noite, ARMY! 💜',         gm:'Que os sonhos sejam coloridos como as músicas do BTS. Durma bem e acorde radiante! 🌸' },
+      zayn:   { e:'🎤', name:'Zayn',          song:'Pillowtalk',           spId:'3qT4bUD1MaWpGrTXcOK5zc', gt:'Boa noite, linda! 🌙',         gm:'Que seu travesseiro seja macio, seus sonhos doces, e você acorde ainda mais bonita amanhã. 💫' },
+      ariana: { e:'☁️', name:'Ariana Grande',  song:'Moonlight',             spId:'4nrPB8O7Y7wsOCJdgXkthe', gt:'Boa noite, thank u! 🤍',       gm:'Brilhe nos sonhos como a lua brilha pela janela. Que a noite te abrace com carinho! 🌙✨' },
+      frank:  { e:'🌊', name:'Frank Ocean',    song:'Godspeed',              spId:'77BO2DiMFdFCgQTfcBgPNW', gt:'Boa noite, alma sensível! 🌊', gm:'Que seus sonhos sejam profundos e bonitos como as melodias do Frank Ocean. 💙' },
+      natan:  { e:'🤠', name:'Natanzinho Lima', song:'25 Milhões de Beijos', spId:'3LW7M4ZFBvnhWvPjREMSvs', gt:'Boa noite, meu bem! 🤠💛',    gm:'Que você receba 25 milhões de beijos nos sonhos esta noite! Durma com sorriso no rosto. 🌻💛' }
     };
 
     (function initBg() {
@@ -476,7 +473,10 @@
       document.getElementById('s-artist').textContent = d.name;
       document.getElementById('g-title').textContent  = d.gt;
       document.getElementById('g-msg').textContent    = d.gm;
-      var src = 'https://open.spotify.com/embed/track/' + d.spId + '?utm_source=generator&theme=0&go=1';
+      
+      // O link correto do Spotify agora está aqui!
+      var src = 'https://open.spotify.com/embed/track/' + d.spId + '?utm_source=generator&theme=0';
+      
       document.getElementById('sp-frame').src = src;
       show('s-play');
       burstSparkles();
