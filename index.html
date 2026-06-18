@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boa Noite 🌸</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/dist/tabler-icons.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      background: #1a0010;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: #1a0010;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .petals-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .petal {
+      position: absolute;
+      border-radius: 50% 0 50% 0;
+      opacity: 0.12;
+      animation: fallingPetal linear infinite;
+    }
+
+    @keyframes fallingPetal {
+      0%   { transform: translateY(-40px) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.15; }
+      90%  { opacity: 0.1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 150, 200, 0.06);
+      border: 1px solid rgba(255, 150, 200, 0.12);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50%       { transform: scale(1.08); opacity: 0.9; }
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1.25rem;
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .screen.active { display: flex; }
+
+    .ribbon {
+      background: linear-gradient(135deg, #ff6eb0, #ff3d8b);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 18px;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      animation: popIn .5s cubic-bezier(.34, 1.56, .64, 1);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    .big-emoji {
+      font-size: 64px;
+      animation: bounce 2.5s ease-in-out infinite;
+      margin-bottom: .4rem;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50%       { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    .h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffd6ec;
+      text-align: center;
+      margin-bottom: .3rem;
+      line-height: 1.2;
+    }
+
+    .sub {
+      font-size: 13px;
+      color: #e8a0c8;
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 130, 190, 0.2);
+      border-radius: 22px;
+      padding: 1.5rem 1.25rem;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .lbl {
+      font-size: 12px;
+      color: #d490b8;
+      margin-bottom: 5px;
+      display: block;
+      font-weight: 600;
+    }
+
+    .inp {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 130, 190, 0.25);
+      border-radius: 14px;
+      padding: 12px 14px;
+      color: #ffd6ec;
+      font-size: 14px;
+      outline: none;
+      margin-bottom: 14px;
+      transition: border .2s, background .2s;
+    }
+
+    .inp:focus {
+      border-color: rgba(255, 100, 170, 0.7);
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .inp::placeholder { color: rgba(220, 140, 180, 0.35); }
+
+    .btn-enter {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #ff3d8b, #ff6eb0);
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .2s, transform .1s;
+    }
+
+    .btn-enter:hover  { opacity: .92; }
+    .btn-enter:active { transform: scale(.97); }
+
+    .err {
+      font-size: 12px;
+      color: #ff8ab0;
+      text-align: center;
+      min-height: 16px;
+      margin-top: 10px;
+    }
+
+    .artist-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .acard {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 130, 190, 0.18);
+      border-radius: 18px;
+      padding: 13px 16px;
+      cursor: pointer;
+      transition: background .2s, border .2s, transform .15s;
+    }
+
+    .acard:hover  { border-color: rgba(255, 80, 160, 0.5); transform: translateX(5px); }
+    .acard:active { transform: scale(.98); }
+
+    .acard-emoji {
+      font-size: 28px;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 80, 160, 0.12);
+      border-radius: 13px;
+      flex-shrink: 0;
+    }
+
+    .acard-info  { flex: 1; }
+    .acard-name  { font-size: 15px; font-weight: 700; color: #ffd6ec; margin-bottom: 2px; }
+    .acard-song  { font-size: 12px; color: #d490b8; }
+    .acard-arrow { color: #ff6eb0; font-size: 16px; opacity: .6; }
+
+    .disc-wrap {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(255, 80, 160, 0.18);
+      border: 2px solid rgba(255, 130, 190, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 54px;
+      margin-bottom: 1rem;
+      animation: spinDisc 7s linear infinite;
+      animation-play-state: paused;
+      position: relative;
+    }
+
+    .disc-wrap::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: #1a0010;
+      border: 2px solid rgba(255, 130, 190, 0.4);
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .disc-wrap.spinning { animation-play-state: running; }
+
+    @keyframes spinDisc {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .song-name  { font-size: 17px; font-weight: 700; color: #ffd6ec; text-align: center; margin-bottom: 3px; }
+    .artist-lbl { font-size: 13px; color: #d490b8; text-align: center; margin-bottom: 1rem; }
+
+    .spotify-wrap {
+      width: 100%;
+      max-width: 320px;
+      margin-bottom: 1rem;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .spotify-wrap iframe { border-radius: 14px; display: block; }
+
+    .gn-banner {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 130, 190, 0.15);
+      border-radius: 18px;
+      padding: 1rem 1.25rem;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .gn-title { font-size: 16px; font-weight: 700; color: #ffd6ec; margin-bottom: 6px; }
+    .gn-msg   { font-size: 13px; color: #d490b8; line-height: 1.65; }
+
+    .btn-back {
+      background: transparent;
+      border: 1px solid rgba(255, 130, 190, 0.2);
+      border-radius: 10px;
+      padding: 9px 22px;
+      color: #d490b8;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-back:hover { background: rgba(255, 130, 190, 0.08); }
+
+    .float-heart {
+      position: fixed;
+      font-size: 20px;
+      animation: floatUp 2.8s ease-out forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-280px) scale(.4); opacity: 0; }
+    }
+
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 20px;
+      animation: sparkleAnim 1.2s ease-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes sparkleAnim {
+      0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+      60%  { transform: scale(1.4) rotate(20deg); opacity: 1; }
+      100% { transform: scale(.7) rotate(-10deg) translateY(-28px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="petals-bg" id="petals-bg"></div>
+
+  <div class="wrap">
+
+    <!-- LOGIN -->
+    <div class="screen active" id="s-login">
+      <div class="ribbon">✦ noite especial ✦</div>
+      <div class="big-emoji">🌸</div>
+      <div class="h1">Boa Noite ✨</div>
+      <div class="sub">Entre para começar a sua noite com música</div>
+      <div class="glass-card">
+        <label class="lbl">Seu nome</label>
+        <input class="inp" type="text" id="inp-user" placeholder="Como posso te chamar?" />
+        <label class="lbl">Senha secreta</label>
+        <input class="inp" type="password" id="inp-pass" placeholder="••••••" />
+        <button class="btn-enter" onclick="doLogin()">Entrar 💗</button>
+        <div class="err" id="err"></div>
+      </div>
+    </div>
+
+    <!-- ARTISTAS -->
+    <div class="screen" id="s-artists">
+      <div class="big-emoji" style="font-size:44px;margin-bottom:.2rem">🌙</div>
+      <div class="h1" style="font-size:20px" id="greet">Boa noite! 🌸</div>
+      <div class="sub" style="margin-bottom:1.2rem">Qual trilha sonora pra sua noite?</div>
+      <div class="artist-list">
+        <div class="acard" onclick="pick('bts')">
+          <div class="acard-emoji">💜</div>
+          <div class="acard-info">
+            <div class="acard-name">BTS</div>
+            <div class="acard-song">Dynamite</div>
+          </div>
+          <i class="ti ti-chevron-right acard-arrow" aria-hidden="true"></i>
+        </div>
+        <div class="acard" onclick="pick('zayn')">
+          <div class="acard-emoji">🎤</div>
+          <div class="acard-info">
+            <div class="acard-name">Zayn</div>
+            <div class="acard-song">Pillowtalk</div>
+          </div>
+          <i class="ti ti-chevron-right acard-arrow" aria-hidden="true"></i>
+        </div>
+        <div class="acard" onclick="pick('ariana')">
+          <div class="acard-emoji">☁️</div>
+          <div class="acard-info">
+            <div class="acard-name">Ariana Grande</div>
+            <div class="acard-song">Moonlight</div>
+          </div>
+          <i class="ti ti-chevron-right acard-arrow" aria-hidden="true"></i>
+        </div>
+        <div class="acard" onclick="pick('frank')">
+          <div class="acard-emoji">🌊</div>
+          <div class="acard-info">
+            <div class="acard-name">Frank Ocean</div>
+            <div class="acard-song">Godspeed</div>
+          </div>
+          <i class="ti ti-chevron-right acard-arrow" aria-hidden="true"></i>
+        </div>
+        <div class="acard" onclick="pick('natan')" style="border-color:rgba(255,200,80,.25)">
+          <div class="acard-emoji" style="background:rgba(255,200,80,.12)">🤠</div>
+          <div class="acard-info">
+            <div class="acard-name" style="color:#ffe4a0">Natanzinho Lima</div>
+            <div class="acard-song" style="color:#d4b870">Um Beijo por Minuto (25 Milhões)</div>
+          </div>
+          <i class="ti ti-chevron-right acard-arrow" style="color:#ffc940" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOCANDO -->
+    <div class="screen" id="s-play" style="padding-top:2rem">
+      <div class="disc-wrap" id="disc">🎵</div>
+      <div class="song-name" id="s-title">—</div>
+      <div class="artist-lbl" id="s-artist">—</div>
+      <div class="spotify-wrap">
+        <iframe id="sp-frame"
+          src=""
+          width="100%"
+          height="80"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+        </iframe>
+      </div>
+      <div class="gn-banner">
+        <div class="gn-title" id="g-title">Boa noite! 🌸</div>
+        <div class="gn-msg"   id="g-msg">Que a noite seja toda sua.</div>
+      </div>
+      <button class="btn-back" onclick="goBack()">← Escolher outro artista</button>
+    </div>
+
+  </div>
+
+  <script>
+    var DATA = {
+      bts:    { e:'💜', name:'BTS',            song:'Dynamite',             spId:'5QDLhrAOJJdNAmCTJ8xMyW', gt:'Boa noite, ARMY! 💜',         gm:'Que os sonhos sejam coloridos como as músicas do BTS. Durma bem e acorde radiante! 🌸' },
+      zayn:   { e:'🎤', name:'Zayn',           song:'Pillowtalk',           spId:'0dw41oGsznIHfF6rsiqtLU', gt:'Boa noite, linda! 🌙',         gm:'Que seu travesseiro seja macio, seus sonhos doces, e você acorde ainda mais bonita amanhã. 💫' },
+      ariana: { e:'☁️', name:'Ariana Grande',  song:'Moonlight',            spId:'5A7CwBNDUhvLWuSU5oJEh3', gt:'Boa noite, thank u! 🤍',       gm:'Brilhe nos sonhos como a lua brilha pela janela. Que a noite te abrace com carinho! 🌙✨' },
+      frank:  { e:'🌊', name:'Frank Ocean',    song:'Godspeed',             spId:'34xTFwjPQ1dC6uJmleno7x', gt:'Boa noite, alma sensível! 🌊', gm:'Que seus sonhos sejam profundos e bonitos como as melodias do Frank Ocean. 💙' },
+      natan:  { e:'🤠', name:'Natanzinho Lima', song:'Um Beijo por Minuto (25 Milhões)', spId:'3Mz7wD0BJWDPHZcbX666t0', gt:'Boa noite, meu bem! 🤠💛',     gm:'Que você receba 25 milhões de beijos nos sonhos esta noite! Durma com sorriso no rosto. 🌻💛' }
+    };
+
+    (function initBg() {
+      var bg = document.getElementById('petals-bg');
+      var colors = ['#ff6eb0','#ff3d8b','#ffb3d6','#ff8cc8','#ffd6ec'];
+      for (var i = 0; i < 20; i++) {
+        var p = document.createElement('div');
+        p.className = 'petal';
+        var sz = (8 + Math.random() * 18) + 'px';
+        p.style.cssText = 'width:' + sz + ';height:' + sz +
+          ';left:' + (Math.random() * 100) + '%' +
+          ';animation-duration:' + (6 + Math.random() * 8) + 's' +
+          ';animation-delay:' + (-Math.random() * 8) + 's' +
+          ';background:' + colors[Math.floor(Math.random() * colors.length)];
+        bg.appendChild(p);
+      }
+      [['80px','8%','18%'],['130px','72%','55%'],['170px','28%','72%'],['210px','82%','12%']].forEach(function(b, i) {
+        var el = document.createElement('div');
+        el.className = 'bubble';
+        el.style.cssText = 'width:' + b[0] + ';height:' + b[0] + ';left:' + b[1] + ';top:' + b[2] + ';animation-delay:' + (i * 1.1) + 's';
+        bg.appendChild(el);
+      });
+    })();
+
+    function show(id) {
+      document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+      document.getElementById(id).classList.add('active');
+    }
+
+    function doLogin() {
+      var u = document.getElementById('inp-user').value.trim();
+      var p = document.getElementById('inp-pass').value;
+      var e = document.getElementById('err');
+      if (!u) { e.textContent = 'Diz seu nome primeiro! 💕'; return; }
+      if (p !== 'Carol') { e.textContent = 'Senha errada, tente de novo 🌸'; return; }
+      e.textContent = '';
+      document.getElementById('greet').textContent = 'Boa noite, ' + u + '! 🌸';
+      burstHearts();
+      show('s-artists');
+    }
+
+    function pick(k) {
+      var d = DATA[k];
+      document.getElementById('disc').textContent = d.e;
+      document.getElementById('disc').classList.add('spinning');
+      document.getElementById('s-title').textContent  = d.song;
+      document.getElementById('s-artist').textContent = d.name;
+      document.getElementById('g-title').textContent  = d.gt;
+      document.getElementById('g-msg').textContent    = d.gm;
+      var src = 'https://open.spotify.com/embed/track/' + d.spId + '?utm_source=generator&theme=0&go=1';
+      document.getElementById('sp-frame').src = src;
+      show('s-play');
+      burstSparkles();
+    }
+
+    function goBack() {
+      document.getElementById('sp-frame').src = '';
+      document.getElementById('disc').classList.remove('spinning');
+      show('s-artists');
+    }
+
+    function burstHearts() {
+      var em = ['💗','🌸','✨','💕','🌷','💖','⭐'];
+      for (var i = 0; i < 14; i++) {
+        (function(i) {
+          setTimeout(function() {
+            var h = document.createElement('div');
+            h.className = 'float-heart';
+            h.textContent = em[Math.floor(Math.random() * em.length)];
+            h.style.cssText = 'left:' + (8 + Math.random() * 84) + '%;bottom:8%';
+            document.body.appendChild(h);
+            setTimeout(function() { h.remove(); }, 3000);
+          }, i * 100);
+        })(i);
+      }
+    }
+
+    function burstSparkles() {
+      var em = ['✨','💗','🌸','💖','🌟'];
+      var xs = ['15%','32%','50%','68%','82%','25%'];
+      for (var i = 0; i < 6; i++) {
+        (function(i) {
+          setTimeout(function() {
+            var s = document.createElement('div');
+            s.className = 'sparkle';
+            s.textContent = em[Math.floor(Math.random() * em.length)];
+            s.style.cssText = 'left:' + xs[i] + ';top:' + (15 + Math.random() * 40) + '%';
+            document.body.appendChild(s);
+            setTimeout(function() { s.remove(); }, 1400);
+          }, i * 80);
+        })(i);
+      }
+    }
+
+    document.getElementById('inp-pass').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') doLogin();
+    });
+  </script>
+
+</body>
+</html>
